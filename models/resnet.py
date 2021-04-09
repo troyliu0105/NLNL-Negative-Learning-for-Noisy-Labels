@@ -1,10 +1,8 @@
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 
-
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
            'resnet152']
-
 
 model_urls = {
     'resnet18': 'https://download.pytorch.org/models/resnet18-5c106cde.pth',
@@ -96,7 +94,7 @@ class ResNet(nn.Module):
 
     def __init__(self, block, layers, in_channels, num_classes=1000):
         super(ResNet, self).__init__()
-        self.inplanes = 64 
+        self.inplanes = 64
         self.conv1 = nn.Conv2d(in_channels, 64, kernel_size=3, stride=1, padding=1, bias=False)
         self.bn1 = nn.BatchNorm2d(64)
         self.relu = nn.ReLU(inplace=True)

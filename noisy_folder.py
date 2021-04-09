@@ -1,10 +1,9 @@
-import torch.utils.data as data
-
-from PIL import Image
-
 import os
 import os.path
 import sys
+
+import torch.utils.data as data
+from PIL import Image
 
 
 def has_file_allowed_extension(filename, extensions):
@@ -34,7 +33,7 @@ def is_image_file(filename):
 def make_dataset(dir, noisy_labels, class_to_idx, extensions):
     images = []
     dir = os.path.expanduser(dir)
-    i=0
+    i = 0
     for target in sorted(class_to_idx.keys()):
         d = os.path.join(dir, target)
         if not os.path.isdir(d):
@@ -50,7 +49,8 @@ def make_dataset(dir, noisy_labels, class_to_idx, extensions):
 
     return images
 
-# For noisy labels! 
+
+# For noisy labels!
 # by Juseung Yun
 class DatasetFolder(data.Dataset):
     """A generic data loader where the samples are arranged in this way: ::
@@ -80,8 +80,9 @@ class DatasetFolder(data.Dataset):
         classes, class_to_idx = self._find_classes(root)
         samples = make_dataset(root, noisy_labels, class_to_idx, extensions)
         if len(samples) == 0:
-            raise(RuntimeError("Found 0 files in subfolders of: " + root + "\n"
-                               "Supported extensions are: " + ",".join(extensions)))
+            raise (RuntimeError("Found 0 files in subfolders of: " + root + "\n"
+                                                                            "Supported extensions are: " + ",".join(
+                extensions)))
 
         self.root = root
         self.loader = loader
@@ -128,7 +129,7 @@ class DatasetFolder(data.Dataset):
         if self.target_transform is not None:
             target = self.target_transform(target)
 
-        return sample, target, index # by Juseung Yun
+        return sample, target, index  # by Juseung Yun
 
     def __len__(self):
         return len(self.samples)
@@ -193,6 +194,7 @@ class ImageFolder(DatasetFolder):
         class_to_idx (dict): Dict with items (class_name, class_index).
         imgs (list): List of (image path, class_index) tuples
     """
+
     def __init__(self, root, noisy_labels, transform=None, target_transform=None,
                  loader=default_loader):
         super(ImageFolder, self).__init__(root, noisy_labels, loader, IMG_EXTENSIONS,
